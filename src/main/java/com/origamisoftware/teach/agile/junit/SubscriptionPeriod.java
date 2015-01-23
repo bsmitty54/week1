@@ -2,6 +2,7 @@ package com.origamisoftware.teach.agile.junit;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -44,7 +45,8 @@ public class SubscriptionPeriod {
      */
     public int getTotalDays() {
         // todo implement method
-        return 0;
+        long days = (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24);
+        return (int) days;
     }
 
     /**
@@ -52,8 +54,14 @@ public class SubscriptionPeriod {
      */
     public int getTotalMonths() {
         // todo implement method
-
-        return 0;
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(endDate);
+        int stopYear = cal.get(Calendar.YEAR);
+        int stopMonth = cal.get(Calendar.MONTH);
+        cal.setTime(startDate);
+        int startMonth = cal.get(Calendar.MONTH);
+        int startYear = cal.get(Calendar.YEAR);
+        return (stopYear - startYear) * 12 + (stopMonth - startMonth);
     }
 
     /**
@@ -66,7 +74,11 @@ public class SubscriptionPeriod {
      */
     public boolean hasExpired(Date date) {
         // todo implement method
-        throw new NotImplementedException();
+        if(date.after(endDate)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
