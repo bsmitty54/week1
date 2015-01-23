@@ -15,6 +15,8 @@ public class SubscriptionPeriodTest {
 
     private Calendar now;
     private Calendar sixthMonthsFromNow;
+    private Calendar threeMonthsFromNow;
+    private Calendar oneYearFromNow;
 
     /**
      * This code is used to setup a known state or baseline
@@ -26,6 +28,10 @@ public class SubscriptionPeriodTest {
         now = Calendar.getInstance();
         sixthMonthsFromNow = Calendar.getInstance();
         sixthMonthsFromNow.add(Calendar.MONTH, 6);
+        threeMonthsFromNow = Calendar.getInstance();
+        threeMonthsFromNow.add(Calendar.MONTH, 6);
+        oneYearFromNow = Calendar.getInstance();
+        oneYearFromNow.add(Calendar.MONTH,12);
     }
 
     @Test
@@ -71,8 +77,14 @@ public class SubscriptionPeriodTest {
      *  TODO fix this test
      */
     @Test
+
     public void testHashExpired() {
-        fail("This test needs to written!.");
+        SubscriptionPeriod subscriptionPeriod = new SubscriptionPeriod(now.getTime(), sixthMonthsFromNow.getTime());
+        boolean hasExpired = subscriptionPeriod.hasExpired(threeMonthsFromNow.getTime());
+        assertEquals(hasExpired, false);
+        hasExpired = subscriptionPeriod.hasExpired(oneYearFromNow.getTime());
+        assertEquals(hasExpired, true);
+
     }
 
 
